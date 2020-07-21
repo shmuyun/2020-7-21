@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.parking_access.mapper.ParkHandoverMapper">
+
+    <resultMap id="company" type="Company">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="coding" property="coding"></result>
+        <result column="location" property="location"></result>
+        <result column="linkman" property="linkman"></result>
+        <result column="phone" property="phone"></result>
+        <result column="startDate" property="startDate"></result>
+        <result column="endDate" property="endDate"></result>
+        <result column="state" property="state"></result>
+        <result column="xu" property="xu"></result>
+        <result column="parentId" property="parentId"></result>
+        <result column="province" property="province"></result>
+        <result column="city" property="city"></result>
+        <result column="district" property="district"></result>
+    </resultMap>
+
+
+    <resultMap id="handGate" type="HandGate">
+        <result column="uuid" property="uuid"></result>
+        <result column="parkUuid" property="parkUuid"></result>
+        <result column="orgUuid" property="orgUuid"></result>
+        <result column="type" property="type"></result>
+        <result column="name" property="name"></result>
+        <result column="smallCarSolutionUuid" property="tempTollSolutionUuid"></result>
+        <result column="deleted" property="delete"></result>
+    </resultMap>
+
+    <resultMap id="handPayLog" type="HandPayLog">
+        <id column="id" property="id"></id>
+        <result column="uuid" property="uuid"></result>
+        <result column="logUuid" property="logUuid"></result>
+        <result column="license" property="license"></result>
+        <result column="amount" property="amount"></result>
+        <result column="payMethod" property="payMethod"></result>
+        <result column="remark" property="remark"></result>
+        <result column="payTime" property="payTime"></result>
+        <result column="parkUuid" property="parkUuid"></result>
+        <result column="orgUuid" property="orgUuid"></result>
+        <result column="workerUuid" property="workerUuid"></result>
+        <association property="carLog" javaType="CarLog">
+            <result column="paidAmount" property="paidAmount"></result>
+            <result column="enterTime" property="enterTime"></result>
+            <result column="exitTime" property="exitTime"></result>
+        </association>
+    </resultMap>
+
+
+    <resultMap id="carLogPresent" type="CarLogPresent">
+        <id column="id" property="id"></id>
+        <result column="uuid" property="uuid"></result>
+        <result column="license" property="license"></result>
+        <result column="carType" property="carType"></result>
+        <result column="enterGateUuid" property="enterGateUuid"></result>
+        <result column="exitGateUuid" property="exitGateUuid"></result>
+        <result column="enterTime" property="enterTime"></result>
+        <result column="exitTime" property="exitTime"></result>
+        <result column="parkUuid" property="parkUuid"></result>
+        <result column="orgUuid" property="orgUuid"></result>
+        <result column="amount" property="amount"></result>
+        <result column="paidAmount" property="paidAmount"></result>
+        <result column="workerUuid" property="workerUuid"></result>
+        <result column="paid" property="paid"></result>
+        <result column="payMethod" property="payMethod"></result>
+        <result column="year" property="year"></result>
+        <result column="month" property="month"></result>
+        <result column="day" property="day"></result>
+        <result column="logTime" property="logTime"></result>
+        <result column="carlogcol" property="carlogcol"></result>
+        <result column="enterStatus" property="enterStatus"></result>
+        <result column="exitStatus" property="exitStatus"></result>
+        <result column="payTime" property="payTime"></result>
+        <result column="appendAmount" property="appendAmount"></result>
+        <result column="appendPayTime" property="appendPayTime"></result>
+        <result column="appendPaid" property="appendPaid"></result>
+        <result column="discount" property="discount"></result>
+        <result column="discountWorkerUuid" property="discountWorkerUuid"></result>
+        <result column="provider" property="provider"></result>
+        <result column="proof" property="proof"></result>
+        <result column="remark" property="remark"></result>
+        <result column="carModal" property="carModal"></result>
+        <result column="color" property="color"></result>
+        <result column="lastUpdateTime" property="lastUpdateTime"></result>
+        <result column="tradeNo" property="tradeNo"></result>
+        <result column="appendTradeNo" property="appendTradeNo"></result>
+        <result column="appendPayMethod" property="appendPayMethod"></result>
+        <result column="payResp" property="payResp"></result>
+        <result column="lastEnterGateUuid" property="lastEnterGateUuid"></result>
+        <result column="enterPicUrl" property="enterPicUrl"></result>
+        <result column="outPicUrl" property="outPicUrl"></result>
+        <association property="car" javaType="CarType">
+            <result column="typeName" property="name"></result>
+        </association>
+        <association property="gate" javaType="Gate">
+            <result column="gateName" property="name"></result>
+        </association>
+        <association property="company" javaType="Company">
+            <result column="companyName" property="name"></result>
+            <result column="capcity" property="capcity"></result>
+        </association>
+
+    </resultMap>
+
+    <resultMap id="gate" type="Gate">
+        <id column="id" property="id"></id>
+        <result column="uuid" property="uuid"></result>
+        <result column="parkUuid" property="parkUuid"></result>
+        <result column="orgUuid" property="orgUuid"></result>
+        <result column="type" property="type"></result>
+        <result column="level" property="level"></result>
+        <result column="name" property="name"></result>
+        <result column="lastUpdateTime" property="lastUpdateTime"></result>
+        <result column="enable" property="enable"></result>
+        <result column="smallCarSolutionUuid" property="smallCarSolutionUuid"></result>
+        <result column="deleted" property="delete"></result>
+        <result column="middleCarSolutionUuid" property="middleCarSolutionUuid"></result>
+        <result column="largeCarSolutionUuid" property="largeCarSolutionUuid"></result>
+        <result column="benCarTypes" property="benCarTypes"></result>
+        <result column="allow" property="allow"></result>
+        <association property="company" javaType="Company">
+            <result column="companyName" property="name"></result>
+        </association>
+        <association property="feesolution" javaType="Feesolution">
+            <result column="feeNmae" property="name"></result>
+        </association>
+    </resultMap>
+
+
+    <resultMap id="handWorker" type="HandWorker">
+        <id column="id" property="id"></id>
+        <result column="no" property="no"></result>
+        <result column="role" property="role"></result>
+        <result column="regDate" property="regDate"></result>
+        <result column="uuid" property="uuid"></result>
+        <result column="parkUuid" property="parkUuid"></result>
+        <result column="orgUuid" property="orgUuid"></result>
+        <result column="userName" property="name"></result>
+        <result column="passWord" property="password"></result>
+        <result column="name" property="name"></result>
+        <result column="imgPath" property="imgPath"></result>
+        <result column="male" property="mal"></result>
+        <result column="phone" property="phone"></result>
+        <result column="email" property="email"></result>
+        <result column="lastUpdateTime" property="lastUpdateTime"></result>
+        <result column="deleted" property="delete"></result>
+    </resultMap>
+
+    <resultMap id="feesolution" type="Feesolution">
+        <id column="id" property="id"></id>
+        <result column="uuid" property="uuid"></result>
+        <result column="wholeDay" property="wholeDay"></result>
+        <result column="name" property="name"></result>
+        <result column="carType" property="carType"></result>
+        <result column="parkuuid" property="parkUuid"></result>
+        <result column="orgUuid" property="orgUuid"></result>
+        <result column="scopeType" property="scopeType"></result>
+        <result column="maxAmount" property="maxAmount"></result>
+        <result column="freeForPM" property="freeForPM"></result>
+        <result column="dayTimeStart" property="dayTimeStart"></result>
+        <result column="dayTimeEnd" property="dayTimeEnd"></result>
+        <result column="workerUuid" property="workerUuid"></result>
+        <result column="regDate" property="regDate"></result>
+        <result column="dailyLimitAmount" property="dailyLimitAmount"></result>
+        <result column="freeTimeUnit" property="freeTimeUnit"></result>
+        <result column="freeTimeUnitType" property="freeTimeUnitType"></result>
+        <result column="leaveAfterPaymentInMins" property="leaveAfterPaymentInMins"></result>
+    </resultMap>
+
+    <resultMap id="carowner" type="Carowner">
+        <id column="id" property="id"></id>
+        <result column="uuid" property="uuid"></result>
+        <result column="name" property="name"></result>
+        <result column="male" property="male"></result>
+        <result column="phone" property="phone"></result>
+        <result column="type" property="type"></result>
+        <result column="license" property="license"></result>
+        <result column="parkuuid" property="parkuuid"></result>
+        <result column="orguuid" property="orguuid"></result>
+        <result column="address" property="address"></result>
+        <result column="remark" property="remark"></result>
+        <result column="dep" property="dep"></result>
+        <result column="box" property="box"></result>
+        <result column="idcard" property="idcard"></result>
+        <result column="ownerUuid" property="ownerUuid"></result>
+        <result column="startDate" property="startDate"></result>
+        <result column="endDate" property="endDate"></result>
+        <result column="regDate" property="regDate"></result>
+        <result column="spaceuuid" property="spaceuuid"></result>
+        <result column="amount" property="amount"></result>
+        <result column="workerUuid" property="workerUuid"></result>
+        <result column="no" property="no"></result>
+        <result column="feeSolutionUuid" property="feeSolutionUuid"></result>
+        <result column="carUuid" property="carUuid"></result>
+        <result column="balance" property="balance"></result>
+        <result column="lastBalance" property="lastBalance"></result>
+        <result column="paymentNums" property="paymentNums"></result>
+        <association property="company" javaType="Company">
+            <result column="companyName" property="name"></result>
+        </association>
+        <association property="carType" javaType="CarType">
+            <result column="carName" property="name"></result>
+        </association>
+        <association property="worker" javaType="Worker">
+            <result column="userName" property="name"></result>
+        </association>
+      <!--  <association property="residents" javaType="Residents">
+            <result column="resPhone" property="phone"></result>
+            <result column="resIdNumber" property="idNumber"></result>
+        </association>-->
+    </resultMap>
+
+    <resultMap id="feeplan" type="Feeplan">
+        <id column="id" property="id"></id>
+        <id column="uuid" property="uuid"></id>
+        <result column="timeUnit" property="timeUnit"></result>
+        <result column="unitType" property="unitType"></result>
+        <result column="amount" property="amount"></result>
+        <result column="ladderPricing" property="ladderPricing"></result>
+        <result column="soluUuid" property="soluUuid"></result>
+        <result column="nighttime" property="nighttime"></result>
+    </resultMap>
+
+    <resultMap id="carLog" type="CarLog">
+        <id column="id" property="id"></id>
+        <result column="uuid" property="uuid"></result>
+        <result column="license" property="license"></result>
+        <result column="carType" property="carType"></result>
+        <result column="enterGateUuid" property="enterGateUuid"></result>
+        <result column="exitGateUuid" property="exitGateUuid"></result>
+        <result column="enterTime" property="enterTime"></result>
+        <result column="exitTime" property="exitTime"></result>
+        <result column="parkUuid" property="parkUuid"></result>
+        <result column="orgUuid" property="orgUuid"></result>
+        <result column="amount" property="amount"></result>
+        <result column="paidAmount" property="paidAmount"></result>
+        <result column="workerUuid" property="workerUuid"></result>
+        <result column="paid" property="paid"></result>
+        <result column="payMethod" property="payMethod"></result>
+        <result column="year" property="year"></result>
+        <result column="month" property="month"></result>
+        <result column="day" property="day"></result>
+        <result column="logTime" property="logTime"></result>
+        <result column="carlogcol" property="carlogcol"></result>
+        <result column="enterStatus" property="enterStatus"></result>
+        <result column="exitStatus" property="exitStatus"></result>
+        <result column="payTime" property="payTime"></result>
+        <result column="appendAmount" property="appendAmount"></result>
+        <result column="appendPayTime" property="appendPayTime"></result>
+        <result column="appendPaid" property="appendPaid"></result>
+        <result column="discount" property="discount"></result>
+        <result column="discountWorkerUuid" property="discountWorkerUuid"></result>
+        <result column="provider" property="provider"></result>
+        <result column="proof" property="proof"></result>
+        <result column="remark" property="remark"></result>
+        <result column="carModal" property="carModal"></result>
+        <result column="color" property="color"></result>
+        <result column="lastUpdateTime" property="lastUpdateTime"></result>
+        <result column="tradeNo" property="tradeNo"></result>
+        <result column="appendTradeNo" property="appendTradeNo"></result>
+        <result column="appendPayMethod" property="appendPayMethod"></result>
+        <result column="payResp" property="payResp"></result>
+        <result column="lastEnterGateUuid" property="lastEnterGateUuid"></result>
+        <result column="enterPicUrl" property="enterPicUrl"></result>
+        <result column="outPicUrl" property="outPicUrl"></result>
+        <association property="car" javaType="CarType">
+            <result column="typeName" property="name"></result>
+        </association>
+        <association property="gate" javaType="Gate">
+            <result column="gateName" property="name"></result>
+        </association>
+
+    </resultMap>
+
+    <resultMap id="ladderPrice" type="LadderPrice">
+        <id column="id" property="id"></id>
+        <result column="planUuid" property="planUuid"></result>
+        <result column="uuid" property="uuid"></result>
+        <result column="soluUuid" property="soluUuid"></result>
+        <result column="ladderAfterTimeUnit" property="ladderAfterTimeUnit"></result>
+        <result column="ladderAfterTimeUnitType" property="ladderAfterTimeUnitType"></result>
+        <result column="ladderTimeUnit" property="ladderTimeUnit"></result>
+        <result column="ladderUnitType" property="ladderUnitType"></result>
+        <result column="ladderAmount" property="ladderAmount"></result>
+    </resultMap>
+
+    <resultMap id="worker" type="Worker">
+        <id column="id" property="id"></id>
+        <result column="userName" property="userName"></result>
+        <result column="passWord" property="passWord"></result>
+        <result column="orgUuid" property="idEntity"></result>
+        <result column="name" property="name"></result>
+        <result column="imgPath" property="imgPath"></result>
+        <result column="male" property="male"></result>
+        <result column="parkUuid" property="parkUuid"></result>
+        <result column="uuid" property="uuid"></result>
+        <result column="no" property="no"></result>
+        <result column="role" property="role"></result>
+        <result column="phone" property="phone"></result>
+        <result column="email" property="email"></result>
+        <result column="regDate" property="regDate"></result>
+        <result column="lastUpdateTime" property="lastUpdateTime"></result>
+        <result column="deleted" property="deleted"></result>
+        <result column="funcRes" property="funcRes"></result>
+    </resultMap>
+
+
+    <select id="selectUserLogin" resultMap="worker">
+        select *  FROM  worker w where w.userName = #{userName} or w.no = #{userName} or w.phone = #{userName}
+    </select>
+
+
+    <select id="countCarPresent" resultMap="carLogPresent">
+       select count(c.id) AS id,y.name as companyName,y.capcity as capcity  from carlogpresent c INNER JOIN company y on(c.parkUuid = y.coding) where c.parkUuid=#{parkid}
+    </select>
+
+    <select id="getGateUuid" resultMap="gate">
+        select * from gate WHERE uuid = #{gateUuid}
+    </select>
+
+    <select id="getCarownerUuid" resultMap="carowner">
+        select c.*,s.phone as resPhone,s.idNumber as resIdNumber  from carowner c INNER JOIN residents s on(s.uuid = c.uuid) where
+          license = #{license} and parkUuid = #{parkUuid}
+    </select>
+
+    <select id="getCarLogPresent" resultMap="carLogPresent">
+        select * from carlogpresent where parkUuid = #{parkid} and license = #{license}
+    </select>
+
+    <select id="selectCaownerLogUuid" resultMap="carLog">
+        select * from carlog where uuid = #{logUuid}
+    </select>
+
+    <select id="selectLicense" resultMap="carowner">
+        select *  from carowner where license=#{license} and parkuuid = #{parkuuid}
+    </select>
+
+    <select id="getCarLog" resultMap="carLogPresent">
+        select * from carlogpresent where parkUuid = #{parkUuid} and license = #{license}
+    </select>
+
+    <select id="getFacilityIdEnt" resultMap="company">
+        select * from company where coding = (select parentId from company where coding = #{idEntity})
+    </select>
+
+    <select id="countCarPresentDate" resultType="int">
+       select count(id) AS countNums from carlogpresent  where enterTime &gt;= #{startTime} and enterTime &lt;= #{endTime} and parkUuid = #{parkid}
+    </select>
+
+    <select id="selectCarLogPresentPage" resultMap="carLogPresent">
+        select * from carlogpresent where enterTime &gt;= #{startTime} and enterTime &lt;= #{endTime} and parkUuid = #{parkid}
+    </select>
+
+    <insert id="addCarLogOver">
+        INSERT into carLog(uuid,parkUuid,orgUuid,license,enterGateUuid,enterTime,enterPicUrl,carType)
+          VALUES(#{uuid},#{parkid},#{orgUuid},#{license},#{gateUuid},#{time},#{picUrl},#{carType})
+    </insert>
+
+    <insert id="addCarLogPresent">
+        INSERT into carLogPresent(uuid,parkUuid,orgUuid,license,enterGateUuid,enterTime,enterPicUrl,carType)
+        VALUES(#{uuid},#{parkid},#{orgUuid},#{license},#{gateUuid},#{time},#{picUrl},#{carType})
+    </insert>
+
+    <update id="updateCarLog">
+        UPDATE carLog set workerUuid = #{workerUuid},amount=#{amount},exitGateUuid = #{gateUuid},exitTime=#{time},outPicUrl = #{picUrl} where uuid = #{logUuid}
+    </update>
+
+    <update id="updateCarLogOutPic">
+        UPDATE carlog set outPicUrl = #{picUrl} where uuid = #{logUuid}
+    </update>
+
+    <insert id="addHandPayLog">
+        INSERT INTO payLog(uuid,logUuid,license,amount,payMethod,payTime,parkUuid,orgUuid,workerUuid)
+          VALUES (#{uuid},#{logUuid},#{license},#{amount},#{payMethod},#{time},#{parkid},#{orgUuid},#{workerUuid})
+    </insert>
+
+    <update id="updateCar5">
+        UPDATE carowner set amount = #{amount} where license = #{license} and parkuuid = #{parkuuid}
+    </update>
+
+    <insert id="addPayLog">
+        INSERT INTO payLog(uuid,parkUuid,orgUuid,logUuid,license,workerUuid,amount,payTime,payMethod)
+          VALUES(#{uuid},#{parkid},#{orgUuid},#{logUuid},#{license},#{workerUuid},#{amount},#{time},1)
+    </insert>
+
+    <select id="selectHandGate" resultMap="handGate">
+       select * from gate where parkUuid = #{parkid}
+    </select>
+
+
+
+    <delete id="deleteCarLogPresent">
+        delete from carLogPresent where uuid = #{logUuid}
+    </delete>
+
+
+    <select id="queryTransactions" resultMap="handPayLog">
+
+        select p.*,w.name as workerName,c.enterTime,c.exitTime,c.paidAmount from payLog p INNER JOIN
+        (select p.id from payLog p INNER JOIN
+        (select c.uuid from carlog c INNER JOIN worker w on(w.uuid = c.workerUuid) where c.enterTime &gt;= #{enterTime}
+        and c.exitTime &lt;= #{exitTime}
+        <choose>
+            <when test="(workerName == '' or workerName == null) and carType ==0">
+                and w.name != ''
+            </when>
+            <when test="workerName != '' and carType ==0">
+                and w.name = #{workerName}
+            </when>
+            <when test="carType != 0 and workerName == ''">
+                and c.carType = #{carType}
+            </when>
+            <otherwise>
+                and w.name = #{workerName} and c.carType = #{carType}
+            </otherwise>
+        </choose>
+        )c on(c.uuid = p.logUuid) where 1=1
+        <choose>
+            <when test="(license == '' or license == null) and payMethod == 0"></when>
+            <when test="license != '' and payMethod == 0">
+                and p.license =#{license}
+            </when>
+            <when test="payMethod != 0 and license == ''">
+                and p.payMethod =#{payMethod}
+            </when>
+            <otherwise>
+                and p.license =#{license} and p.payMethod =#{payMethod}
+            </otherwise>
+        </choose>
+        and p.parkUuid = 'xT0XPO0448' LIMIT 0,50)x on(x.id = p.id)
+        INNER JOIN worker w on(w.uuid = p.workerUuid) INNER JOIN carlog c on(p.logUuid = c.uuid)
+
+    </select>
+
+    <!--  <select id="queryTransactions" resultMap="handPayLog">
+
+          select p.*,w.name as workerName,c.enterTime,c.exitTime,c.paidAmount from payLog p
+          INNER JOIN(select p.id from payLog p INNER JOIN
+          (select c.uuid from carlog c INNER JOIN worker w on(w.uuid = c.workerUuid) where
+          c.enterTime  &gt;= 0 and c.exitTime  &lt;= 1592236799 and c.carType = 1 and w.name = 'xx')c on(c.uuid = p.logUuid)  where
+          p.parkUuid = 'xT0XPO0448' and p.license ='浙BDH111' and p.payMethod = 1)x on(x.id = p.id)
+          INNER JOIN worker w on(w.uuid = p.workerUuid) INNER JOIN carlog c on(p.logUuid = c.uuid)
+      </select>-->
+
+
+    <select id="selectFeesolution" resultMap="feesolution">
+       select * from feesolution where uuid = #{uuid}
+    </select>
+
+    <select id="selectFeeplan" resultMap="feeplan">
+          select * from feeplan2 where soluUuid = #{uuid}
+    </select>
+
+    <select id="selectLadder" resultMap="ladderPrice">
+        select * from ladderPrice2 where soluUuid = #{uuid}
+    </select>
+
+    <select id="getInCount" resultType="int">
+        select COUNT(id) from carlog where parkUuid=#{parkid} and enterTime &gt;=#{enterTime}  and exitTime &lt;= #{exitTime}
+    </select>
+
+    <select id="getOutCount" resultType="int">
+        select COUNT(id) from carlog where parkUuid=#{parkid} and enterTime &gt;=#{enterTime}  and exitTime &lt;= #{exitTime} and exitTime != 0
+    </select>
+
+</mapper>
+
+        <!--   子查询用于提升查询效率 多表联查改成通过单张表索引来根据条件查询id  最后再链表获取详细数据 条件已全部加入-->
